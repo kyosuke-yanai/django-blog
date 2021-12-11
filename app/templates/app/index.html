@@ -2,6 +2,14 @@
 
 {% block content %}
 
-<h1>Hello World</h1>
+<h1>ブログ</h1>
+{% for post in object_list %}
+<ul>
+    <li>
+        <a href="">{{ post.title }}</a>
+        <p>投稿日：{{ post.created|date:"y/n/j" }}</p>
+    </li>
+</ul>
+{% endfor %}
 
 {% endblock %}
