@@ -7,4 +7,10 @@
 
 <p>{{ post.text }}</p>
 
+{% if request.user.is_anonymous %}
+{% else %}
+    <a href="{% url 'blog_edit' post.pk %}">編集</a>
+    <a href="{% url 'blog_delete' post.pk %}">削除</a>
+{% endif %}
+
 {% endblock %}
