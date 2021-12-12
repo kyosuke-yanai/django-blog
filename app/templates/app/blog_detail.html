@@ -8,6 +8,25 @@
 
 <p>{{ post.text }}</p>
 
+<h1>コメント</h1>
+
+{% for comment in comment_list %}
+    <div class="comment">
+        <ul>
+            <li style="list-style: none;">{{ forloop.counter }}:{{ comment.author }} ： {{ comment.created }}</li>
+            <p>{{ comment.text }}</p>
+        </ul>
+    </div>
+{% empty %}
+    <p>コメントがありません</p>
+{% endfor %}
+
+<form action="", method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">投稿</button>
+</form>
+
 {% if request.user.is_anonymous %}
 {% else %}
     <a href="{% url 'blog_edit' post.pk %}">編集</a>
