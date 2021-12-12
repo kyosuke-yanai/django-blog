@@ -15,6 +15,13 @@
         <ul>
             <li style="list-style: none;">{{ forloop.counter }}:{{ comment.author }} ： {{ comment.created }}</li>
             <p>{{ comment.text }}</p>
+            {% if request.user.is_anonymous %}
+            {% else %}
+                <form action="{% url 'comment_delete' post.pk comment.pk %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" onclick='return confirm("本当に削除しますか？");'>コメントを削除する</button>
+                </form>
+            {% endif %}
         </ul>
     </div>
 {% empty %}

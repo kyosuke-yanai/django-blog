@@ -1,9 +1,10 @@
-from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
+from django.shortcuts import render, get_object_or_404, redirect
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView, View
 from .models import Post, Comment
 from .forms import PostForm, CommentForm
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.decorators.http import require_POST
 
 class IndexView(ListView):
     template_name = 'app/index.html'
@@ -47,3 +48,9 @@ class BlogDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'app/blog_delete.html'
     model = Post
     success_url = reverse_lazy('index')
+
+@require_POST
+def CommentDelete(request, post_pk, comment_pk):
+    comment = get_object_or_404(Comment, pk=comment_pk)
+    comment.delete()
+    return redirect('blog_detail', pk=post_pk)
