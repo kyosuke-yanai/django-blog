@@ -14,10 +14,14 @@ class BlogDetailView(DetailView):
     template_name = 'app/blog_detail.html'
     model = Post
 
-class BlogCreateView(CreateView):
+class BlogCreateView(LoginRequiredMixin, CreateView):
     template_name = 'app/blog_create.html'
     form_class = PostForm
     success_url = reverse_lazy('index')
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
 class BlogEditView(LoginRequiredMixin, UpdateView):
     template_name = 'app/blog_edit.html'
@@ -25,7 +29,7 @@ class BlogEditView(LoginRequiredMixin, UpdateView):
     form_class = PostForm
     success_url = reverse_lazy('index')
 
-class BlogDeleteView(DeleteView):
+class BlogDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'app/blog_delete.html'
     model = Post
     success_url = reverse_lazy('index')

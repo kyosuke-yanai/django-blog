@@ -6,6 +6,7 @@
 <ul>
     <li>
         <a href="{% url 'blog_detail' post.pk %}">{{ post.title }}</a>
+        <p>投稿者：{{ post.author }}</p>
         <p>投稿日：{{ post.created|date:"y/m/d H:m:s" }}</p>
     </li>
 </ul>

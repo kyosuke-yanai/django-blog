@@ -3,6 +3,7 @@
 {% block content %}
 
 <h1>{{ post.title }}</h1>
+<p>投稿者：{{ post.author }}</p>
 <p>投稿日：{{ post.created|date:"y/m/d H:m:s" }}</p>
 
 <p>{{ post.text }}</p>
