@@ -7,9 +7,11 @@
 <ul>
     <li>
         <a href="">{{ post.title }}</a>
-        <p>投稿日：{{ post.created|date:"y/n/j" }}</p>
+        <p>投稿日：{{ post.created|date:"y/m/d H:m:s" }}</p>
     </li>
 </ul>
+{% empty %}
+<p>記事がありません</p>
 {% endfor %}
 
 {% endblock %}
