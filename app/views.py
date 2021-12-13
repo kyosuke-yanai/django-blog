@@ -5,11 +5,20 @@ from .forms import PostForm, CommentForm
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.decorators.http import require_POST
+from django.db.models import Q
 
 class IndexView(ListView):
     template_name = 'app/index.html'
     model = Post
-    ordering = '-id'
+
+    def get_queryset(self):
+        word = self.request.GET.get('query')
+        if word:
+            object_list = Post.objects.filter(Q(title__icontains=word) | Q(author__username__icontains=word))
+        else:
+            object_list = Post.objects.all()
+        object_list = object_list.order_by('-id')
+        return object_list
 
 class BlogDetailView(DetailView, FormView):
     template_name = 'app/blog_detail.html'

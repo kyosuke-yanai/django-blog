@@ -1,6 +1,11 @@
 {% extends 'app/base.html' %}
 
 {% block content %}
+<form action="" method="get">
+    <input name="query" value="{{ request.GET.query }}" type="text">
+    <button type="submit">検索する</button>
+</form>
+
 <h1>ブログ一覧</h1>
 {% for post in object_list %}
 <ul>
